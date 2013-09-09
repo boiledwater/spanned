@@ -3,10 +3,14 @@ package com.example.spanned;
 import java.util.ArrayList;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Html;
+import android.text.Selection;
+import android.text.Spannable;
+import android.text.style.BackgroundColorSpan;
 import android.text.style.URLSpan;
 import android.view.View;
 import android.widget.TextView;
@@ -17,10 +21,19 @@ public class MainActivity extends Activity {
 		public void handleMessage(Message msg) {
 			int what = msg.what;
 			if (what == 100) {
-				Object[] spans = (Object[])msg.obj;
+				MessageSpan ms = (MessageSpan) msg.obj;
+				Object[] spans = (Object[])ms.getObj();
+				TextView view = ms.getView();
+				
 				for (Object span : spans) {
 					if (span instanceof URLSpan) {
+						int start = Selection.getSelectionStart(view.getText());
+						int end = Selection.getSelectionEnd(view.getText());
+						BackgroundColorSpan color = new BackgroundColorSpan(Color.GREEN);
 						System.out.println(((URLSpan) span).getURL());
+						Spannable _span = (Spannable)view.getText();
+						_span.setSpan(color, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
+						view.setText(_span);
 					}
 				}
 			}

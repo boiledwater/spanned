@@ -3,6 +3,7 @@ package com.example.spanned;
 import android.os.Handler;
 import android.os.Message;
 import android.text.Layout;
+import android.text.Selection;
 import android.text.Spannable;
 import android.text.method.LinkMovementMethod;
 import android.text.method.MovementMethod;
@@ -49,12 +50,19 @@ public class LinkMovementMethodExt extends LinkMovementMethod {
 	            Object [] spans = buffer.getSpans(off, off, spanClass);
 	            if (spans.length != 0) {
 	                if (action == MotionEvent.ACTION_UP) {
+	                	MessageSpan obj = new MessageSpan();
+	                				obj.setObj(spans);
+	                				obj.setView(widget);
 	                	Message message = handler.obtainMessage();
-	                			message.obj = spans;
+	                			message.obj = obj;
 	                			message.what = 100;
 	                			message.sendToTarget();
 	                	return true;
-	                } 
+	                } else if (action == MotionEvent.ACTION_DOWN) {
+	                    Selection.setSelection(buffer,
+                                			   buffer.getSpanStart(spans[0]),
+                                			   buffer.getSpanEnd(spans[0]));
+     }
 	            } 
 	        }
 
