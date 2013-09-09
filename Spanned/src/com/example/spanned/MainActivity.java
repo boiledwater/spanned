@@ -14,6 +14,7 @@ import android.text.style.BackgroundColorSpan;
 import android.text.style.URLSpan;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	private BackgroundColorSpan color = new BackgroundColorSpan(Color.GREEN);
@@ -31,6 +32,9 @@ public class MainActivity extends Activity {
 						int start = Selection.getSelectionStart(view.getText());
 						int end = Selection.getSelectionEnd(view.getText());
 						System.out.println(((URLSpan) span).getURL());
+						Toast.makeText(MainActivity.this,
+								((URLSpan) span).getURL(), Toast.LENGTH_SHORT)
+								.show();
 						Spannable _span = (Spannable)view.getText();
 						_span.setSpan(color, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 						view.setText(_span);
