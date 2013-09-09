@@ -16,7 +16,8 @@ import android.view.View;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
-	ArrayList<Boolean> list = new ArrayList<Boolean>();
+	private BackgroundColorSpan color = new BackgroundColorSpan(Color.GREEN);
+	private ArrayList<Boolean> list = new ArrayList<Boolean>();
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
 			int what = msg.what;
@@ -29,13 +30,18 @@ public class MainActivity extends Activity {
 					if (span instanceof URLSpan) {
 						int start = Selection.getSelectionStart(view.getText());
 						int end = Selection.getSelectionEnd(view.getText());
-						BackgroundColorSpan color = new BackgroundColorSpan(Color.GREEN);
 						System.out.println(((URLSpan) span).getURL());
 						Spannable _span = (Spannable)view.getText();
 						_span.setSpan(color, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 						view.setText(_span);
 					}
 				}
+			}else if (what == 200) {
+				MessageSpan ms = (MessageSpan) msg.obj;
+				TextView view = ms.getView();
+				Spannable _span = (Spannable)view.getText();
+				_span.removeSpan(color);
+				view.setText(_span);
 			}
 		};
 	};

@@ -49,7 +49,10 @@ public class LinkMovementMethodExt extends LinkMovementMethod {
 	             */
 	            Object [] spans = buffer.getSpans(off, off, spanClass);
 	            if (spans.length != 0) {
-	                if (action == MotionEvent.ACTION_UP) {
+	                if (action == MotionEvent.ACTION_DOWN) {
+	                	Selection.setSelection(buffer,
+                 			   				   buffer.getSpanStart(spans[0]),
+                 			   				   buffer.getSpanEnd(spans[0]));
 	                	MessageSpan obj = new MessageSpan();
 	                				obj.setObj(spans);
 	                				obj.setView(widget);
@@ -58,11 +61,15 @@ public class LinkMovementMethodExt extends LinkMovementMethod {
 	                			message.what = 100;
 	                			message.sendToTarget();
 	                	return true;
-	                } else if (action == MotionEvent.ACTION_DOWN) {
-	                    Selection.setSelection(buffer,
-                                			   buffer.getSpanStart(spans[0]),
-                                			   buffer.getSpanEnd(spans[0]));
-     }
+	                } else if (action == MotionEvent.ACTION_UP) {
+	                	MessageSpan obj = new MessageSpan();
+        				obj.setView(widget);
+	                	Message message = handler.obtainMessage();
+		            			message.obj = obj;
+		            			message.what = 200;
+		            			message.sendToTarget();
+		                return true;		            			
+	                }
 	            } 
 	        }
 
