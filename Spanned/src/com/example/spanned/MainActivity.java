@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
-	private BackgroundColorSpan color = new BackgroundColorSpan(Color.GREEN);
+	private BackgroundColorSpan color = new BackgroundColorSpan(Color.BLUE);
 	private ArrayList<Boolean> list = new ArrayList<Boolean>();
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
