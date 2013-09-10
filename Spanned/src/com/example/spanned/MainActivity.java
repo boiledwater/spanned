@@ -17,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
-	private BackgroundColorSpan color = new BackgroundColorSpan(Color.BLUE);
+	private BackgroundColorSpan color = null;
 	private ArrayList<Boolean> list = new ArrayList<Boolean>();
 	private Handler handler = new Handler() {
 		public void handleMessage(Message msg) {
@@ -32,10 +32,9 @@ public class MainActivity extends Activity {
 						int start = Selection.getSelectionStart(view.getText());
 						int end = Selection.getSelectionEnd(view.getText());
 						System.out.println(((URLSpan) span).getURL());
-						Toast.makeText(MainActivity.this,
-								((URLSpan) span).getURL(), Toast.LENGTH_SHORT)
-								.show();
+						Toast.makeText(MainActivity.this,((URLSpan) span).getURL(), Toast.LENGTH_SHORT).show();
 						Spannable _span = (Spannable)view.getText();
+						color = new BackgroundColorSpan(view.getLinkTextColors().getDefaultColor());
 						_span.setSpan(color, start, end, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE);
 						view.setText(_span);
 					}
