@@ -15,7 +15,7 @@ public class LinkMovementMethodExt extends LinkMovementMethod {
 	private static LinkMovementMethod sInstance;
 	private  Handler handler = null;
 	private  Class spanClass = null;
-	
+
 	public static  MovementMethod getInstance(Handler _handler,Class _spanClass) {
 		if (sInstance == null) {
 			sInstance = new LinkMovementMethodExt();
@@ -68,9 +68,9 @@ public class LinkMovementMethodExt extends LinkMovementMethod {
 		            			message.obj = obj;
 		            			message.what = 200;
 		            			message.sendToTarget();
-		                return true;		            			
+		                return true;
 	                }
-	            } 
+	            }
 	        }
 
 	        return super.onTouchEvent(widget, buffer, event);
@@ -79,7 +79,7 @@ public class LinkMovementMethodExt extends LinkMovementMethod {
 	 public boolean canSelectArbitrarily() {
 	        return true;
 	    }
-	 
+
 	public boolean onKeyUp(TextView widget, Spannable buffer, int keyCode,
 			KeyEvent event) {
 		return false;
