@@ -24,7 +24,6 @@ public class LinkMovementMethodExt extends LinkMovementMethod {
             ((LinkMovementMethodExt) sInstance).handlerWeakReference = new WeakReference<Handler>(_handler);
             ((LinkMovementMethodExt) sInstance).spanClass = _spanClass;
         }
-
         return sInstance;
     }
 
