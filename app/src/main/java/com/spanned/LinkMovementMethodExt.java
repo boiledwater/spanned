@@ -77,7 +77,6 @@ public class LinkMovementMethodExt extends LinkMovementMethod {
                 }
             }
         }
-
         return super.onTouchEvent(widget, buffer, event);
     }
 
