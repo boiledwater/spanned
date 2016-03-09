@@ -31,7 +31,6 @@ public class LinkMovementMethodExt extends LinkMovementMethod {
     public boolean onTouchEvent(TextView widget, Spannable buffer,
                                 MotionEvent event) {
         int action = event.getAction();
-
         if (action == MotionEvent.ACTION_UP ||
                 action == MotionEvent.ACTION_DOWN) {
             int x = (int) event.getX();
