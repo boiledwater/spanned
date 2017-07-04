@@ -7,6 +7,7 @@ import android.os.Message;
 import android.text.Html;
 import android.text.Selection;
 import android.text.Spannable;
+import android.text.Spanned;
 import android.text.style.BackgroundColorSpan;
 import android.text.style.URLSpan;
 import android.view.View;
@@ -54,10 +55,10 @@ public class MainActivity extends Activity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        String a = "<a href='/a'>aaaa</a>123456<a href='/b'>bbbb</a>7890";
+        String a = "<a href='/a'>aaaa</a>123456<a href='/b'>bbbb</a>7890<a href='123'>123</>";
         View span = findViewById(R.id.span);
-        ((TextView) span).setText(Html.fromHtml(a));
+        Spanned text = Html.fromHtml(a);
+        ((TextView) span).setText(text);
         ((TextView) span).setMovementMethod(LinkMovementMethodExt.getInstance(handler, URLSpan.class));
     }
-
 }

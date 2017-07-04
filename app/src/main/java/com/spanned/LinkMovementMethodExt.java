@@ -15,14 +15,14 @@ import java.lang.ref.WeakReference;
 
 public class LinkMovementMethodExt extends LinkMovementMethod {
     private static LinkMovementMethod sInstance;
-    private WeakReference<Handler> handlerWeakReference = null;
-    private Class spanClass = null;
+    private Class mSpanClass = null;
+    private WeakReference<Handler> mWeakReference = null;
 
-    public static MovementMethod getInstance(Handler _handler, Class _spanClass) {
+    public static MovementMethod getInstance(Handler handler, Class spanClass) {
         if (sInstance == null) {
             sInstance = new LinkMovementMethodExt();
-            ((LinkMovementMethodExt) sInstance).handlerWeakReference = new WeakReference<Handler>(_handler);
-            ((LinkMovementMethodExt) sInstance).spanClass = _spanClass;
+            ((LinkMovementMethodExt) sInstance).mWeakReference = new WeakReference<>(handler);
+            ((LinkMovementMethodExt) sInstance).mSpanClass = spanClass;
         }
         return sInstance;
     }
@@ -31,6 +31,7 @@ public class LinkMovementMethodExt extends LinkMovementMethod {
     public boolean onTouchEvent(TextView widget, Spannable buffer,
                                 MotionEvent event) {
         int action = event.getAction();
+
         if (action == MotionEvent.ACTION_UP ||
                 action == MotionEvent.ACTION_DOWN) {
             int x = (int) event.getX();
@@ -48,35 +49,38 @@ public class LinkMovementMethodExt extends LinkMovementMethod {
             /**
              * get you interest span
              */
-            Object[] spans = buffer.getSpans(off, off, spanClass);
-            Handler handler = handlerWeakReference.get();
-            if (handler == null) {
-                return false;
-            }
+            Object[] spans = buffer.getSpans(off, off, mSpanClass);
             if (spans.length != 0) {
                 if (action == MotionEvent.ACTION_DOWN) {
-                    Selection.setSelection(buffer,
-                            buffer.getSpanStart(spans[0]),
-                            buffer.getSpanEnd(spans[0]));
+                    Selection.setSelection(buffer, buffer.getSpanStart(spans[0]), buffer.getSpanEnd(spans[0]));
                     MessageSpan obj = new MessageSpan();
                     obj.setObj(spans);
                     obj.setView(widget);
-                    Message message = handler.obtainMessage();
-                    message.obj = obj;
-                    message.what = 100;
-                    message.sendToTarget();
-                    return true;
+                    Handler handler = mWeakReference.get();
+                    if (handler != null) {
+                        Message message = handler.obtainMessage();
+                        message.obj = obj;
+                        message.what = 100;
+                        message.sendToTarget();
+                        return true;
+                    }
+                    return false;
                 } else if (action == MotionEvent.ACTION_UP) {
-                    MessageSpan obj = new MessageSpan();
-                    obj.setView(widget);
-                    Message message = handler.obtainMessage();
-                    message.obj = obj;
-                    message.what = 200;
-                    message.sendToTarget();
-                    return true;
+                    Handler handler = mWeakReference.get();
+                    if (handler != null) {
+                        MessageSpan obj = new MessageSpan();
+                        obj.setView(widget);
+                        Message message = handler.obtainMessage();
+                        message.obj = obj;
+                        message.what = 200;
+                        message.sendToTarget();
+                        return true;
+                    }
+                    return false;
                 }
             }
         }
+
         return super.onTouchEvent(widget, buffer, event);
     }
 
