@@ -14,6 +14,8 @@ import android.widget.TextView;
 import java.lang.ref.WeakReference;
 
 public class LinkMovementMethodExt extends LinkMovementMethod {
+    public static final int LinkMovementMethod_Down = 1001;
+    public static final int LinkMovementMethod_Up = 2002;
     private static LinkMovementMethod sInstance;
     private Class mSpanClass = null;
     private WeakReference<Handler> mWeakReference = null;
@@ -60,7 +62,7 @@ public class LinkMovementMethodExt extends LinkMovementMethod {
                     if (handler != null) {
                         Message message = handler.obtainMessage();
                         message.obj = obj;
-                        message.what = 100;
+                        message.what = LinkMovementMethod_Down;
                         message.sendToTarget();
                         return true;
                     }
@@ -72,7 +74,7 @@ public class LinkMovementMethodExt extends LinkMovementMethod {
                         obj.setView(widget);
                         Message message = handler.obtainMessage();
                         message.obj = obj;
-                        message.what = 200;
+                        message.what = LinkMovementMethod_Up;
                         message.sendToTarget();
                         return true;
                     }

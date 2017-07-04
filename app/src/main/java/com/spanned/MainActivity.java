@@ -22,7 +22,7 @@ public class MainActivity extends Activity {
     private Handler handler = new Handler() {
         public void handleMessage(Message msg) {
             int what = msg.what;
-            if (what == 100) {
+            if (what == LinkMovementMethodExt.LinkMovementMethod_Down) {
                 MessageSpan ms = (MessageSpan) msg.obj;
                 Object[] spans = (Object[]) ms.getObj();
                 TextView view = ms.getView();
@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
                         view.setText(_span);
                     }
                 }
-            } else if (what == 200) {
+            } else if (what == LinkMovementMethodExt.LinkMovementMethod_Up) {
                 MessageSpan ms = (MessageSpan) msg.obj;
                 TextView view = ms.getView();
                 Spannable _span = (Spannable) view.getText();
