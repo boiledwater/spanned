@@ -23,9 +23,9 @@ public class LinkMovementMethodExt extends LinkMovementMethod {
     public static MovementMethod getInstance(Handler handler, Class spanClass) {
         if (sInstance == null) {
             sInstance = new LinkMovementMethodExt();
-            ((LinkMovementMethodExt) sInstance).mWeakReference = new WeakReference<>(handler);
-            ((LinkMovementMethodExt) sInstance).mSpanClass = spanClass;
         }
+        ((LinkMovementMethodExt) sInstance).mWeakReference = new WeakReference<>(handler);
+        ((LinkMovementMethodExt) sInstance).mSpanClass = spanClass;
         return sInstance;
     }
 
